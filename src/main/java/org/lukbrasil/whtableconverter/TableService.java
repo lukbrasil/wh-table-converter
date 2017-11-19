@@ -20,10 +20,47 @@ import org.apache.commons.csv.CSVRecord;
  */
 public class TableService {
 
+    public class Table {
+
+        private final String id;
+        private final List<TableItem> items = new ArrayList<>();
+
+        public Table(String tableId) {
+            id = tableId;
+        }
+
+        public void add(String itemId) {
+            TableItem item = new TableItem(itemId);
+            items.add(item);
+        }
+
+        public TableItem getItem(int index) {
+            return items.get(index);
+        }
+
+        public int size() {
+            return items.size();
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder builder = new StringBuilder();
+            builder.append(String.format("[%s] id=%s\n", getClass().getSimpleName(), getId()));
+            for (TableItem item : items) {
+                builder.append(item).append("\n");
+            }
+            return builder.toString();
+        }
+    }
+
     public class TableItem {
 
-        private String id;
-        private Map<String, String> attributes = new HashMap<>();
+        private final String id;
+        private final Map<String, String> attributes = new HashMap<>();
 
         TableItem(String itemId) {
             id = itemId;
@@ -33,22 +70,22 @@ public class TableService {
             return id;
         }
 
-        public Map<String, String> copyAttributes() {
-            return new HashMap<String, String>(attributes);
-        }
-
-        public TableItem add(String key, String value) {
+        public void add(String key, String value) {
             attributes.put(key, value);
-            return this;
         }
 
+        public String getValue(String attribute) {
+            return attributes.get(attribute);
+        }
+
+        @Override
         public String toString() {
             return String.format("[%s] id=%s attr=%s", getClass().getSimpleName(), id, attributes);
         }
     }
 
-    public List<TableItem> fromCSV(Reader csv) throws IOException {
-        List<TableItem> result = new ArrayList<>();
+    public Table fromCSV(Reader csv) throws IOException {
+        Table result = null;
 
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(csv);
 
@@ -56,17 +93,21 @@ public class TableService {
         for (CSVRecord record : records) {
             if (firstRecord) {
                 for (String value : record) {
-                    result.add(new TableItem(value));
+                    if (result == null) {
+                        result = new Table(value);
+                    } else {
+                        result.add(value);
+                    }
                 }
                 firstRecord = false;
             } else {
-                int i = 0;
+                int i = -1;
                 String attibuteName = "";
                 for (String value : record) {
-                    if (i == 0) {
+                    if (i == -1) {
                         attibuteName = value;
                     } else {
-                        result.get(i).add(attibuteName, value);
+                        result.getItem(i).add(attibuteName, value);
                     }
                     i++;
                 }

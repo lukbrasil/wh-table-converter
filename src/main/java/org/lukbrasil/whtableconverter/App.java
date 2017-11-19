@@ -6,7 +6,6 @@
 package org.lukbrasil.whtableconverter;
 
 import java.io.FileReader;
-import java.util.List;
 
 /**
  *
@@ -20,11 +19,8 @@ public class App {
 
             System.out.println("Converting file " + args[0]);
 
-            List<TableService.TableItem> result = myClass.fromCSV(new FileReader(args[0]));
-
-            for (TableService.TableItem item : result) {
-                System.out.println(item);
-            }
+            TableService.Table result = myClass.fromCSV(new FileReader(args[0]));
+            System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
         }
