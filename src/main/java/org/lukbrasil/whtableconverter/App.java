@@ -5,7 +5,9 @@
  */
 package org.lukbrasil.whtableconverter;
 
+import org.lukbrasil.whtableconverter.table.service.TableService;
 import java.io.FileReader;
+import org.lukbrasil.whtableconverter.table.Table;
 
 /**
  *
@@ -19,7 +21,7 @@ public class App {
 
             System.out.println("Converting file " + args[0]);
 
-            TableService.Table result = myClass.fromCSV(new FileReader(args[0]));
+            Table result = myClass.fromCSV(new FileReader(args[0]));
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
