@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.lukbrasil.whtableconverter.table.parsed;
+package org.lukbrasil.whtableconverter.table.parse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +12,16 @@ import java.util.List;
  *
  * @author luk
  */
-public class ParsedTableItem {
+public class ParsedTable {
 
     private String id;
-    private List<ParsedAttribute> attributes = new ArrayList<>();
+    private List<ParsedTableItem> items = new ArrayList<>();
 
-    public ParsedTableItem(String itemId) {
-        id = itemId;
+    public ParsedTable(String tableId) {
+        id = tableId;
     }
 
-    public void add(ParsedAttribute attribute) {
-        attributes.add(attribute);
+    public void add(ParsedTableItem item) {
+        items.add(item);
     }
 }

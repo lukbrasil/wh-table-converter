@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.lukbrasil.whtableconverter.table.parsed;
+package org.lukbrasil.whtableconverter.table.parse;
 
 /**
  *
@@ -17,5 +17,9 @@ public class ParsedAttribute {
     public ParsedAttribute(String attrId, String attrType) {
         id = attrId;
         type = attrType;
+    }
+
+    public String getId() {
+        return id;
     }
 }

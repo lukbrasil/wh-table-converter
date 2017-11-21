@@ -14,6 +14,7 @@ public class AttributeValueFormatException extends Exception {
     private String value;
 
     public AttributeValueFormatException(String invalidValue) {
+        super();
         value = invalidValue;
     }
 }
